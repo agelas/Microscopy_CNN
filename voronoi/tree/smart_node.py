@@ -2,7 +2,9 @@ class SmartNode:
 
     def __init__(self, data):
         '''
-        A smart tree node that is augmented with extra functionality
+        A smart tree node that is augmented with extra functionality for
+        traversing through parent and children nodes, determining height, 
+        whether node is a leaf, a child, and which child it is. 
         
         param data: Data that is stored inside of the node
         '''
@@ -232,9 +234,5 @@ class SmartNode:
         if self.left is not None:
             ret += self.left._visualize(depth = depth + 1)
 
-        return ret
-
-        
-
-
+        return ret     
     
