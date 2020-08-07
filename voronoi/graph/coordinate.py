@@ -12,5 +12,3 @@ class Coordinate:
         '''
         return f"({round(self.x, 3)}, {round(self.y, 3)})"
     
-    def __str__(self):
-        return str(self.x), str(self.y)

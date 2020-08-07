@@ -4,7 +4,12 @@ from graph.half_edge import HalfEdge
 from graph.algebra import Algebra
 import numpy as np
 
-#Something from visualization should go here too at some point
+import sys
+import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
+from visualization import Tell
 
 class Polygon:
     def __init__(self, tuples):
@@ -91,14 +96,14 @@ class Polygon:
         resulting_edges = []
         for edge in edges:
             if edge.get_origin() is None or not self.inside(edge.get_origin()):
-                self.finish_edge(edge.twin)
+                self.finish_edge(edge)
             if edge.twin.get_origin() is None or not self.inside(edge.twin.get_origin()):
                 self.finish_edge(edge.twin)
             if edge.get_origin() is not None and edge.twin.get_origin() is not None:
                 resulting_edges.append(edge)
             else:
                 self.delete_edge(edge, verbose)
-                #Tell will go here
+                Tell.print(verbose, "Edge deleted!")
 
         #Re-order polygon vertices
         self.polygon_vertices = self.get_ordered_vertices(self.polygon_vertices)

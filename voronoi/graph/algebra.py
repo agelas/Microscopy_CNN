@@ -77,5 +77,7 @@ class Algebra:
 
         return True
 
-    
+    if __name__ == "__main__":
+        Algebra.line_ray_intersection_point([5, 0.5], [38, 33], [10, 5], [7.5, 10])
+        Algebra.line_ray_intersection_point([5, 0.5], [-28, 33], [0, 5], [2.5, 10])
     

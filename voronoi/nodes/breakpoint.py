@@ -65,7 +65,8 @@ class Breakpoint:
         else:
             #We need to do math now to solve for x if we get here
              x = -(math.sqrt(
-                 v * (a ** 2 * u - 2 * a * c * u + b ** 2 * (u - v) + c ** 2 * u) + d ** 2 * u * (v - u) + 1 ** 2 * (u - v) ** 2) + a * v - c * u) / (u - v)
+                v * (a ** 2 * u - 2 * a * c * u + b ** 2 * (u - v) + c ** 2 * u) + d ** 2 * u * (v - u) + l ** 2 * (
+                    u - v) ** 2) + a * v - c * u) / (u - v)
              
              result.x = x
 

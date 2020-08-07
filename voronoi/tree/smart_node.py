@@ -179,7 +179,7 @@ class SmartNode:
         #Go to the left branch and take the maximum
         return current.parent.left.maximum()
     
-    def replace_lead(self, replacement, root):
+    def replace_leaf(self, replacement, root):
         '''
         Replace the node with a replacement tree
         Requires the current node to be a leaf
@@ -228,7 +228,7 @@ class SmartNode:
             ret += self.right._visualize(depth + 1)
         
         #Print own value
-        ret += "\n" + (" " * depth) + str(self.get_label())
+        ret += "\n" + ("    " * depth) + str(self.get_label())
 
         #Print left branch
         if self.left is not None:
