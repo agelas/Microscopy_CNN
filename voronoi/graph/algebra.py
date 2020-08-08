@@ -2,7 +2,6 @@ import numpy as np
 from graph.coordinate import Coordinate
 
 class Algebra:
-
     @staticmethod
     def distance(point_a, point_b):
         x1 = point_a.x
@@ -10,7 +9,7 @@ class Algebra:
         y1 = point_a.y
         y2 = point_b.y
 
-        return np.sqrt((x2 - x1) ** 2 + (y2 - y1) **2)
+        return np.sqrt((x2 - x1) ** 2 + (y2 - y1)**2)
 
     @staticmethod
     def magnitude(vector):
@@ -24,14 +23,15 @@ class Algebra:
 
     @staticmethod
     def line_ray_intersection_point(ray_orig, ray_end, point_1, point_2):
-        #convert to numpy arrays
-        orig = np.array(ray_orig, dtype = np.float)
+        # Convert to numpy arrays
+        orig = np.array(ray_orig, dtype=np.float)
         end = np.array(ray_end)
-        direction = np.array(Algebra.norm(end - orig), dtype = np.float)
-        point_1 = np.array(point_1, dtype = np.float)
-        point_2 = np.array(point_2, dtype = np.float)
+        direction = np.array(Algebra.norm(end - orig), dtype=np.float)
+        point_1 = np.array(point_1, dtype=np.float)
+        point_2 = np.array(point_2, dtype=np.float)
 
-        #Ray-line segment intersection test
+        # Ray-Line Segment Intersection Test in 2D
+        # http://bit.ly/1CoxdrG
         v1 = orig - point_1
         v2 = point_2 - point_1
         v3 = np.array([-direction[1], direction[0]])
@@ -77,7 +77,7 @@ class Algebra:
 
         return True
 
-    if __name__ == "__main__":
-        Algebra.line_ray_intersection_point([5, 0.5], [38, 33], [10, 5], [7.5, 10])
-        Algebra.line_ray_intersection_point([5, 0.5], [-28, 33], [0, 5], [2.5, 10])
-    
+
+if __name__ == "__main__":
+    Algebra.line_ray_intersection_point([5, 0.5], [38, 33], [10, 5], [7.5, 10])
+    Algebra.line_ray_intersection_point([5, 0.5], [-28, 33], [0, 5], [2.5, 10])

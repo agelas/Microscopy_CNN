@@ -19,13 +19,8 @@ class Polygon:
         min_x = min([p.x for p in self.points])
         max_y = max([p.y for p in self.points])
         max_x = max([p.x for p in self.points])
-        center = Coordinate((max_x + min_x)/2, (max_y + min_y)/2)
-        
-        self.min_y = min_y
-        self.min_x = min_x
-        self.max_y = max_y
-        self.max_x = max_x
-        self.center = center
+        center = Coordinate((max_x + min_x) / 2, (max_y + min_y) / 2)
+        self.min_y, self.min_x, self.max_y, self.max_x, self.center = min_y, min_x, max_y, max_x, center
 
         self.points = self.order_points(self.points)
         self.polygon_vertices = []
@@ -33,12 +28,13 @@ class Polygon:
             self.polygon_vertices.append(Vertex(point=point))
 
     def order_points(self, points):
-        clockwise = sorted(points, key = lambda point: (-180 - Algebra.calculate_angle(point, self.center))%360)
+        clockwise = sorted(points, key=lambda point: (-180 - Algebra.calculate_angle(point, self.center)) % 360)
         return clockwise
 
     def get_ordered_vertices(self, vertices):
         vertices = [vertex for vertex in vertices if vertex.position is not None]
-        clockwise = sorted(vertices, key=lambda vertex: (-180 - Algebra.calculate_angle(vertex.position, self.center))%360)
+        clockwise = sorted(vertices,
+                           key=lambda vertex: (-180 - Algebra.calculate_angle(vertex.position, self.center)) % 360)
         return clockwise
 
     @staticmethod
@@ -53,64 +49,70 @@ class Polygon:
         cell = self.get_closest_point(vertices[0].position, points)
         previous_edge = None
         for index in range(0, len(vertices) - 1):
-            #Get origin
+
+            # Get origin
             origin = vertices[index]
             end = vertices[index + 1]
 
-            #If vertex is connected to other edges, update cell
+            # If vertex is connected to other edges, update the cell
             if len(origin.incident_edges) > 0:
                 cell = origin.incident_edges[0].twin.incident_point
 
-            #Create the edge
+            # Create the edge
             edge = HalfEdge(cell, origin=origin, twin=HalfEdge(None, origin=end))
             origin.incident_edges.append(edge)
             end.incident_edges.append(edge.twin)
 
-            #Add first edge if needed
+            # Add first edge if needed
             if cell:
                 cell.first_edge = cell.first_edge or edge
 
-            #Connect edges
+            # Connect edges
             if len(end.incident_edges) > 0:
                 edge.set_next(end.incident_edges[0])
 
-            #Connect to incoming or previous edge
+            # Connect to incoming edge, or previous edge
             if len(origin.incident_edges) > 0:
                 origin.incident_edges[0].twin.set_next(edge)
             elif previous_edge is not None:
                 previous_edge.set_next(edge)
-            
-            #Add the edge to the list
+
+            # Add the edge to the list
             edges.append(edge)
 
-            #Set previous edge
+            # Set previous edge
             previous_edge = edge
 
         existing_vertices = [i for i in existing_vertices if self.inside(i.position)]
+
         return edges, vertices + existing_vertices
 
     def get_coordinates(self):
         return [(i.x, i.y) for i in self.points]
 
-    def finish_edges(self, edges, verbose = False):
+    def finish_edges(self, edges, verbose=False):
         resulting_edges = []
         for edge in edges:
+
             if edge.get_origin() is None or not self.inside(edge.get_origin()):
                 self.finish_edge(edge)
+
             if edge.twin.get_origin() is None or not self.inside(edge.twin.get_origin()):
                 self.finish_edge(edge.twin)
+
             if edge.get_origin() is not None and edge.twin.get_origin() is not None:
                 resulting_edges.append(edge)
             else:
                 self.delete_edge(edge, verbose)
                 Tell.print(verbose, "Edge deleted!")
 
-        #Re-order polygon vertices
+        # Re-order polygon vertices
         self.polygon_vertices = self.get_ordered_vertices(self.polygon_vertices)
+
         return resulting_edges, self.polygon_vertices
 
     @staticmethod
-    def delete_edge(edge, verbose = False):
+    def delete_edge(edge, verbose=False):
         prev_edge = edge.prev
         next_edge = edge.next
 
@@ -119,7 +121,9 @@ class Polygon:
 
         if next_edge:
             next_edge.twin.set_next(prev_edge)
-        
+
+        Tell.print(verbose, f"Edge {edge} deleted, selecting neighbor edge {prev_edge or next_edge}.")
+
         if edge.incident_point.first_edge == edge:
             if prev_edge:
                 edge.incident_point.first_edge = prev_edge
@@ -131,7 +135,7 @@ class Polygon:
                 edge.twin.incident_point.first_edge = prev_edge.twin
             elif next_edge:
                 edge.twin.incident_point.first_edge = next_edge.twin
-        
+
     def finish_edge(self, edge):
         # Start should be a breakpoint
         start = edge.get_origin(y=2*(self.min_y - self.max_y), max_y=self.max_y)
@@ -166,6 +170,13 @@ class Polygon:
         return False
 
     def inside(self, point):
+        # if self.on_edge(point):
+        #     return False
+
+        # Ray-casting algorithm based on
+        # http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+        # Javascript implementation from https://github.com/substack/point-in-polygon
+
         vertices = self.points + self.points[0:1]
 
         x = point.x
