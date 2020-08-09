@@ -1,6 +1,10 @@
 from tree.smart_node import SmartNode
 
 class InternalNode(SmartNode):
+    '''
+    Is basically a SmartNode. Internal nodes store the breakpoints on the beach
+    line.
+    '''
 
     def __init__(self, data: "BreakPoint"):
         super().__init__(data)

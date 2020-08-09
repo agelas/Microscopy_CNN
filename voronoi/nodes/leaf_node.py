@@ -2,6 +2,11 @@ from nodes.arc import Arc
 from tree.smart_node import SmartNode
 
 class LeafNode(SmartNode):
+    '''
+    Each leaf node stored in the AVL (BBST) tree represents an arc. The 
+    leftmost leaf represents the left arc, the next lead represents the 
+    second leftmost arc, etc.
+    '''
     def __init__(self, data: "Arc"):
         super().__init__(data)
 

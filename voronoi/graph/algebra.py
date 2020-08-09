@@ -31,11 +31,12 @@ class Algebra:
         point_2 = np.array(point_2, dtype=np.float)
 
         # Ray-Line Segment Intersection Test in 2D
-        # http://bit.ly/1CoxdrG
+        # https://rootllama.wordpress.com/2014/06/20/ray-line-segment-intersection-test-in-2d/
         v1 = orig - point_1
         v2 = point_2 - point_1
         v3 = np.array([-direction[1], direction[0]])
 
+        #Check if the ray and line segment are parallel
         if np.dot(v2, v3) == 0:
             return []
 
