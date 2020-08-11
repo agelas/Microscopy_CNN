@@ -13,12 +13,12 @@ Output: Vor(P) given inside a boudning box in a doubly-connected linked list <i>
 
 1. Initialize priority queue Q with all site events, initialize empty status structure &tau;, initialize empty doubly-connected linked list <i>D</i>
 
-    while Q != empty<br>
-        do Remove event with highest y-coordinate from Q<br>
-            if event == site event at P<sub>i</sub><br>
-                HandleSiteEvent(P<sub>i</sub>)<br>
-            else<br>
-                HandleCircleEvent(&gamma;), &gamma; is a leaf of &tau; representing an arc that disappears<br>
+    &nbsp;&nbsp;while Q != empty<br>
+        &nbsp;&nbsp;&nbsp;&nbspdo Remove event with highest y-coordinate from Q<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event == site event at P<sub>i</sub><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HandleSiteEvent(P<sub>i</sub>)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HandleCircleEvent(&gamma;), &gamma; is a leaf of &tau; representing an arc that disappears<br>
 
 2. Internal nodes in &tau; are half-infinite edges, compute bounding box and attack edges to bounding box
 3. Traverse half-edges of doubly-connected edge list to add the cell records and pointers to and from them. 
