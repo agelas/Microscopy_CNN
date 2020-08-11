@@ -11,16 +11,16 @@ The most efficient way of constructing a Voronoi diagram is using Fortune's Algo
 Input: A set P={P<sub>1</sub>,...,P<sub>n</sub>} of sites in a plane
 Output: Vor(P) given inside a boudning box in a doubly-connected linked list <i>D</i>.
 
-1. Initialize priority queue Q with all site events, initialize empty status structure &TAU;, initialize empty doubly-connected linked list <i>D</i>
+1. Initialize priority queue Q with all site events, initialize empty status structure &tau;, initialize empty doubly-connected linked list <i>D</i>
 
-    while Q != empty
-        do Remove event with highest y-coordinate from Q
-            if event == site event at P<sub>i</sub>
-                HandleSiteEvent(P<sub>i</sub>)
-            else
-                HandleCircleEvent(&gamma;), &gamma; is a leaf of &TAU; representing an arc that disappears
-                
-2. Internal nodes in &TAU; are half-infinite edges, compute bounding box and attack edges to bounding box
+    while Q != empty<br>
+        do Remove event with highest y-coordinate from Q<br>
+            if event == site event at P<sub>i</sub><br>
+                HandleSiteEvent(P<sub>i</sub>)<br>
+            else<br>
+                HandleCircleEvent(&gamma;), &gamma; is a leaf of &tau; representing an arc that disappears<br>
+
+2. Internal nodes in &tau; are half-infinite edges, compute bounding box and attack edges to bounding box
 3. Traverse half-edges of doubly-connected edge list to add the cell records and pointers to and from them. 
 
 ## Resources Used:
