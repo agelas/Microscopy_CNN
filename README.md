@@ -11,7 +11,7 @@ The most efficient way of constructing a Voronoi diagram is using Fortune's Algo
 Input: A set P={P<sub>1</sub>,...,P<sub>n</sub>} of sites in a plane
 Output: Vor(P) given inside a boudning box in a doubly-connected linked list <i>D</i>.
 
-1. Initialize priority queue Q with all site events, initialize empty status structure &tau;, initialize empty doubly-connected linked list <i>D</i>
+1. Initialize priority queue Q with all site events, initialize empty AVL tree &tau;, initialize empty doubly-connected linked list <i>D</i>
 
     &nbsp;&nbsp;while Q != empty<br>
         &nbsp;&nbsp;&nbsp;&nbsp;do Remove event with highest y-coordinate from Q<br>
@@ -24,5 +24,5 @@ Output: Vor(P) given inside a boudning box in a doubly-connected linked list <i>
 3. Traverse half-edges of doubly-connected edge list to add the cell records and pointers to and from them. 
 
 ## Resources Used:
-Berg, Mark de. <i>Computational Geometry: Algorithms and Applications</i>. Berlin: Springer, 1997
-https://github.com/Yatoom/voronoi
+Theory behind Voronoi diagrams/Fortune's algorithm: de Berg, Mark. <i>Computational Geometry: Algorithms and Applications</i>. Berlin: Springer, 1997
+Starter for implementation of Fortune's algorithm: https://github.com/Yatoom/voronoi

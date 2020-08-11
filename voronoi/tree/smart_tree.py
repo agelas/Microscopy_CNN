@@ -1,9 +1,10 @@
 from tree.smart_node import SmartNode
 
 class SmartTree:
-    """
-    Self-balancing Binary Search Tree.
-    """
+    '''
+    AVL Tree aka self-balancing Binary Search Tree. This particular data structure allows
+    you to perfrom find(), put(), remove() operations in O(log(n)) time. 
+    '''
 
     @staticmethod
     def find(root: SmartNode, key, **kwargs):
@@ -22,16 +23,16 @@ class SmartTree:
 
     @staticmethod
     def find_value(root: SmartNode, query: SmartNode, compare=lambda x, y: x == y, **kwargs):
-        """
+        '''
         Find an item using a query node and a comparison function.
 
-        :param root: (SmartNode) The root to start searching from
-        :param query: The query
-        :param compare: (lambda) Lambda expression to compare the node against the query. Will be called as
-        compare(node.data, query.data).
-        :param kwargs: Optional arguments to be passed to the get_key() functions
-        :return: (SmartNode or None) Returns the node that corresponds to the query or None
-        """
+        param root: (SmartNode) The root to start searching from
+        param query: The query
+        param compare: (lambda) Lambda expression to compare the node against the query. Will be called as
+                        compare(node.data, query.data).
+        param kwargs: Optional arguments to be passed to the get_key() functions
+        return: (SmartNode or None) Returns the node that corresponds to the query or None
+        '''
         key = query.get_key(**kwargs)
         node = root
         while node is not None:
@@ -57,16 +58,16 @@ class SmartTree:
 
     @staticmethod
     def find_leaf_node(root: SmartNode, key, **kwargs):
-        """
+        '''
         Follows a path downward between the internal nodes using the key until it
         reaches a leaf node. If it is unclear which path to take, the left path is
         taken.
 
-        :param root: (SmartNode) The root of the (sub)tree to travel down
-        :param key: The key to use to determine the path
-        :param kwargs: Optional arguments passed to the get_key() functions
-        :return: (SmartNode) The node found at the end of the journey
-        """
+        params root: (SmartNode) The root of the (sub)tree to travel down
+        params key: The key to use to determine the path
+        params kwargs: Optional arguments passed to the get_key() functions
+        return: (SmartNode) The node found at the end of the journey
+        '''
 
         node = root
         while node is not None:
@@ -96,6 +97,14 @@ class SmartTree:
 
     @staticmethod
     def insert(root: SmartNode, node: SmartNode, **kwargs):
+        '''
+        Insert a node into the tree
+
+        params root: (SmartNode) the root of the tree we want to insert into
+        params node: (SmartNode) the node we want to insert
+        params kwargs: optional arguments to be used for get_key()
+        return: root of new tree after balancing
+        '''
 
         # Get keys once
         node_key = node.get_key(**kwargs) if node is not None else None
@@ -138,6 +147,12 @@ class SmartTree:
 
     @staticmethod
     def delete(root: SmartNode, key: int, **kwargs):
+        '''
+        Deletes the node with the provided key
+
+        params key: (int) the key of the node we want deleted
+        return: the root of the new tree after balancing
+        '''
 
         if root is None:
             return root
@@ -173,12 +188,12 @@ class SmartTree:
 
     @staticmethod
     def balance_and_propagate(node):
-        """
+        '''
         Walks up the tree recursively to rebalance all nodes, until it reaches the new root.
 
-        :param node: The starting point, everything below this point is assumed to be balanced.
-        :return: The root of the balanced tree
-        """
+        param node: The starting point, everything below this point is assumed to be balanced.
+        return: The root of the balanced tree
+        '''
 
         node = SmartTree.balance(node)
 
@@ -189,11 +204,12 @@ class SmartTree:
 
     @staticmethod
     def balance(node):
-        """
+        '''
         Make the three balanced if it is unbalanced.
-        :param node: (Node) The root node of the tree to balance
-        :return: (Node) The new root of the sub tree
-        """
+
+        param node: (Node) The root node of the tree to balance
+        return: (Node) The new root of the sub tree
+        '''
 
         # If the node is unbalanced, then try out the 4 cases
 
@@ -220,10 +236,18 @@ class SmartTree:
     @staticmethod
     def rotate_left(z):
         '''
-        Rotate tree to the left.
-
-        :param z: (Node) The root of the sub tree
-        :return: (Node) The new root of the sub tree
+        Rotate tree to the left. This is needed when a node is inserted into the right subtree
+        of another, higher up node's right subtree, causing an imbalance.
+       \                    / 
+        z                  y  
+       / \                / \ 
+      T1  y              z   x
+         / \    ---->   / \ / \ 
+        T2  x         T1 T2 T3 T4
+           / \ 
+          T3 T4
+        param z: (Node) The root of the sub tree
+        return: (Node) The new root of the sub tree
         '''
         grandparent = z.parent
         y = z.right
@@ -253,8 +277,19 @@ class SmartTree:
     @staticmethod
     def rotate_right(z):
         '''
-        :param z: (Node) The root of the sub tree
-        :return: (Node) The new root of the sub tree
+        Rotate tree to the right. This is needed when a node is inserted into the left
+        subtree of another, higher up node's left subtree, causing an imbalance. 
+                /                   \ 
+               z                     y
+              / \                   / \ 
+             y  T4                 x   z
+            / \       ---->       / \ / \ 
+           x   T3               T1 T2 T3 T4
+          / \ 
+         T1  T2
+
+        param z: (Node) The root of the sub tree
+        return: (Node) The new root of the sub tree
         '''
         grandparent = z.parent
         y = z.left
