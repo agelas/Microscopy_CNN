@@ -14,7 +14,7 @@ Output: Vor(P) given inside a boudning box in a doubly-connected linked list <i>
 1. Initialize priority queue Q with all site events, initialize empty status structure &tau;, initialize empty doubly-connected linked list <i>D</i>
 
     &nbsp;&nbsp;while Q != empty<br>
-        &nbsp;&nbsp;&nbsp;&nbspdo Remove event with highest y-coordinate from Q<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;do Remove event with highest y-coordinate from Q<br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event == site event at P<sub>i</sub><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HandleSiteEvent(P<sub>i</sub>)<br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else<br>
