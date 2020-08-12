@@ -24,5 +24,5 @@ Output: Vor(P) given inside a boudning box in a doubly-connected linked list <i>
 3. Traverse half-edges of doubly-connected edge list to add the cell records and pointers to and from them. 
 
 ## Resources Used:
-Theory behind Voronoi diagrams/Fortune's algorithm: de Berg, Mark. <i>Computational Geometry: Algorithms and Applications</i>. Berlin: Springer, 1997
+Theory behind Voronoi diagrams/Fortune's algorithm: de Berg, Mark. <i>Computational Geometry: Algorithms and Applications</i>. Berlin: Springer, 1997<br>
 Starter for implementation of Fortune's algorithm: https://github.com/Yatoom/voronoi
