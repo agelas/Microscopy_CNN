@@ -116,3 +116,45 @@ def visualize(y, current_event, bounding_poly, points, vertices, edges, arc_list
             plt.text(s=size, x=x + scale / 100, y=y + scale / 100, color=Colors.TEXT)
 
     plt.show()
+
+def basicVisualize(y, current_event, bounding_poly, points, vertices, edges):
+    fig, ax = plt.subplots(figsize=(7, 7))
+    plt.title(str(current_event))
+    scale = (bounding_poly.max_y - bounding_poly.min_y)
+    border = (bounding_poly.max_y - bounding_poly.min_y) / 4
+    plt.ylim((bounding_poly.min_y - border, bounding_poly.max_y + border))
+    plt.xlim((bounding_poly.min_x - border, bounding_poly.max_x + border))
+
+    # Create 1000 equally spaced points between -10 and 10 and setup plot window
+    x = np.linspace(bounding_poly.min_x, bounding_poly.max_x, 1000)
+    x_full = np.linspace(bounding_poly.min_x - border, bounding_poly.max_x + border, 1000)
+
+    # Plot half-edges
+    for edge in edges:
+
+        # Get start and end of edges
+        start = edge.get_origin(y, bounding_poly.max_y)
+        end = edge.twin.get_origin(y, bounding_poly.max_y)
+
+        # Draw line
+        if start and end:
+            plt.plot([start.x, end.x], [start.y, end.y], Colors.EDGE)
+
+    # Draw bounding box
+    ax.add_patch(
+        patches.Polygon(bounding_poly.get_coordinates(), fill=False, edgecolor=Colors.BOUNDING_BOX)
+    )
+
+    '''
+    #We may or may not need these idk
+    # Plot vertices
+    for vertex in vertices:
+        x, y = vertex.position.x, vertex.position.y
+        ax.scatter(x=[x], y=[y], s=50, color=Colors.VERTICES)
+
+    # Plot points
+    for point in points:
+        x, y = point.x, point.y
+        ax.scatter(x=[x], y=[y], s=50, color=Colors.CELL_POINTS)
+    '''
+    plt.show()

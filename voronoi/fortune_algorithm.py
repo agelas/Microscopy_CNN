@@ -10,6 +10,7 @@ from nodes import LeafNode, Arc, Breakpoint, InternalNode
 from events import CircleEvent, SiteEvent
 from tree import SmartTree, SmartNode
 from visualization import visualize
+from visualization import basicVisualize
 from visualization import Tell
 
 class Algorithm:
@@ -56,7 +57,7 @@ class Algorithm:
         return self.event_queue
 
     def create_diagram(self, points: list, vis_steps=False, vis_result=False, vis_tree=False,
-                       vis_before_clipping=False, verbose=False):
+                       vis_before_clipping=False, verbose=False, justEdge=False):
         """
         Create the Voronoi diagram.
         :param points: (list) The list of cell points to make the diagram for
@@ -150,6 +151,11 @@ class Algorithm:
             visualize(-1000, current_event="Final result", bounding_poly=self.bounding_poly,
                       points=self.points, vertices=self.vertices, edges=self.edges, arc_list=self.arcs,
                       event_queue=self.event_queue, calc_cell_sizes=True)
+
+        # This is where you add reroute for basicVisual
+        if justEdge:
+            basicVisualize(-1000, current_event="Final result", bounding_poly=self.bounding_poly,
+                      points=self.points, vertices=self.vertices, edges=self.edges)
 
     def handle_site_event(self, event: SiteEvent, verbose=False):
 
