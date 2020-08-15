@@ -154,7 +154,7 @@ class Algorithm:
 
         # This is where you add reroute for basicVisual
         if justEdge:
-            basicVisualize(-1000, current_event="Final result", bounding_poly=self.bounding_poly,
+            basicVisualize(-1000, current_event="Just Edges", bounding_poly=self.bounding_poly,
                       points=self.points, vertices=self.vertices, edges=self.edges)
 
     def handle_site_event(self, event: SiteEvent, verbose=False):

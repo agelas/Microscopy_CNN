@@ -138,7 +138,7 @@ def basicVisualize(y, current_event, bounding_poly, points, vertices, edges):
 
         # Draw line
         if start and end:
-            plt.plot([start.x, end.x], [start.y, end.y], Colors.EDGE)
+            plt.plot([start.x, end.x], [start.y, end.y], Colors.EDGE, linestyle = ':')
 
     # Draw bounding box
     ax.add_patch(
