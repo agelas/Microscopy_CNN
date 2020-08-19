@@ -118,7 +118,7 @@ def visualize(y, current_event, bounding_poly, points, vertices, edges, arc_list
     plt.show()
 
 def basicVisualize(y, current_event, bounding_poly, points, vertices, edges):
-    fig, ax = plt.subplots(figsize=(10, 7))
+    fig, ax = plt.subplots(figsize=(12, 9))
     plt.title(str(current_event))
     scale = (bounding_poly.max_y - bounding_poly.min_y)
     border = (bounding_poly.max_y - bounding_poly.min_y) / 4
