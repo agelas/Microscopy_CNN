@@ -9,9 +9,9 @@ class Cell_Generator:
         interesting
         '''
         np.random.seed(5) #Make this predictable for now
-        randX = np.random.randint(low = -10, high = 10, size = 5)
+        randX = np.random.randint(low = lowX, high = highX, size = 15)
         np.random.seed(7)
-        randY = np.random.randint(low = -5, high = 5, size = 5)
+        randY = np.random.randint(low = lowY, high = highY, size = 15)
         fig, ax = plt.subplots(figsize=(12, 9))
         plt.title('Scattered Cell Points')
         plt.scatter(randX, randY)
@@ -30,9 +30,46 @@ class Cell_Generator:
             yInt.append(convertY)
     
         centroids = self.merge_lists(xInt, yInt)
+        #print(centroids)
+        self.distribute_centroids(centroids)
+        
+        #Want to distribute our points somewhat in our plane
     
         return centroids
 
     def merge_lists(self, list1, list2):
         merged_list = [(list1[i], list2[i]) for i in range (0, len(list1))]
         return merged_list
+
+    def distribute_centroids(self, centroids_list):
+        
+        for index, item in enumerate(centroids_list):
+            x_coord, y_coord = item[0], item[1]
+            print('outer loop', item)
+
+            while not self.distances_good(x_coord, y_coord, centroids_list):
+                #If distances_good is not true, then change coordinates
+                x_coord = x_coord + 1
+                y_coord = y_coord + 1
+                change_coord = list(item)
+                change_coord[0] = x_coord
+                change_coord[1] = y_coord
+                reinsert = tuple(change_coord)
+                centroids_list[index] = reinsert
+            #print(centroids_list)
+
+    def distances_good(self, x_coord, y_coord, ref_list):
+
+        for item in ref_list:
+            print('check against', item)
+            return self.check_distance(x_coord, y_coord, item[0], item[1])
+
+    def check_distance(self, x1, x2, y1, y2):
+        dist = np.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+        if dist == 0:
+            #Don't replace itself, although if you move centroid onto another one could be false True
+            return True
+        if dist < 4:
+            print('Found')
+            return False
+        return True
