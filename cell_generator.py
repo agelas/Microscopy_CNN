@@ -9,9 +9,9 @@ class Cell_Generator:
         interesting
         '''
         np.random.seed(5) #Make this predictable for now
-        randX = np.random.randint(low = lowX, high = highX, size = 15)
+        randX = np.random.randint(low = lowX, high = highX, size = 20)
         np.random.seed(7)
-        randY = np.random.randint(low = lowY, high = highY, size = 15)
+        randY = np.random.randint(low = lowY, high = highY, size = 20)
         fig, ax = plt.subplots(figsize=(12, 9))
         plt.title('Scattered Cell Points')
         plt.scatter(randX, randY)
@@ -31,7 +31,7 @@ class Cell_Generator:
     
         centroids = self.merge_lists(xInt, yInt)
         #print(centroids)
-        self.distribute_centroids(centroids)
+        centroids = self.distribute_centroids(centroids)
         
         #Want to distribute our points somewhat in our plane
     
@@ -42,10 +42,10 @@ class Cell_Generator:
         return merged_list
 
     def distribute_centroids(self, centroids_list):
-        
+        print(centroids_list)
         for index, item in enumerate(centroids_list):
             x_coord, y_coord = item[0], item[1]
-            print('outer loop', item)
+            #print('outer loop', item)
 
             while not self.distances_good(x_coord, y_coord, centroids_list):
                 #If distances_good is not true, then change coordinates
@@ -56,16 +56,22 @@ class Cell_Generator:
                 change_coord[1] = y_coord
                 reinsert = tuple(change_coord)
                 centroids_list[index] = reinsert
-            #print(centroids_list)
+            print('Edited: ', centroids_list)
+        return centroids_list
 
     def distances_good(self, x_coord, y_coord, ref_list):
-
+        
         for item in ref_list:
-            print('check against', item)
-            return self.check_distance(x_coord, y_coord, item[0], item[1])
+            #print('check against', item)
+            if not self.check_distance(x_coord, y_coord, item[0], item[1]):
+                return False
+        #If we make it here all distances are good
+        return True
 
-    def check_distance(self, x1, x2, y1, y2):
+    def check_distance(self, x1, y1, x2, y2):
+        #print('x1: ', x1, 'x2: ', x2)
         dist = np.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+        #print(dist)
         if dist == 0:
             #Don't replace itself, although if you move centroid onto another one could be false True
             return True
