@@ -49,14 +49,22 @@ class Cell_Generator:
 
             while not self.distances_good(x_coord, y_coord, centroids_list):
                 #If distances_good is not true, then change coordinates
-                x_coord = x_coord + 1
-                y_coord = y_coord + 1
+                if x_coord + 1 > 25:
+                    x_coord = -24 #minX + 1 
+                else:
+                    x_coord = x_coord + 1
+
+                if y_coord + 1 > 10:
+                    y_coord = -9
+                else:
+                    y_coord = y_coord + 1
+
                 change_coord = list(item)
                 change_coord[0] = x_coord
                 change_coord[1] = y_coord
                 reinsert = tuple(change_coord)
                 centroids_list[index] = reinsert
-            print('Edited: ', centroids_list)
+        print('Edited: ', centroids_list)
         return centroids_list
 
     def distances_good(self, x_coord, y_coord, ref_list):
@@ -76,6 +84,6 @@ class Cell_Generator:
             #Don't replace itself, although if you move centroid onto another one could be false True
             return True
         if dist < 4:
-            print('Found')
+            #print('Found')
             return False
         return True
